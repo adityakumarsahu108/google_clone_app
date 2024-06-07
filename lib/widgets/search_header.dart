@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_clone_app/colors.dart';
+import 'package:google_clone_app/screens/search_screen.dart';
 
 class SearchHeader extends StatelessWidget {
   const SearchHeader({super.key});
@@ -22,8 +25,58 @@ class SearchHeader extends StatelessWidget {
             width: 27,
           ),
           Container(
-            width: size.width,
-          )
+            width: size.width * 0.45,
+            height: 44,
+            decoration: BoxDecoration(
+              color: searchColor,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: searchColor),
+            ),
+            child: TextFormField(
+              onFieldSubmitted: (query) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) => SearchScreen(
+                          searchQuery: query,
+                          start: "0",
+                        )),
+                  ),
+                );
+              },
+              style: const TextStyle(fontSize: 16),
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      maxWidth: 150,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/mic-icon.svg',
+                          height: 20,
+                          width: 20,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Icon(
+                          Icons.search,
+                          color: blueColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+              ),
+            ),
+          ),
         ],
       ),
     );
